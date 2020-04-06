@@ -41,9 +41,9 @@ public class Deck {
     }
 
     public Card pickCard() {
-        Card tempCard = isiDeck.get(0);
-        isiDeck.remove(0);
-        return tempCard;
+        return isiDeck.remove(0);
     }
+
+    
 
 }
