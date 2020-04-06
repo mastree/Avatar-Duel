@@ -4,20 +4,22 @@ import java.io.*;
 import java.util.*;
 import java.lang.*;
 import com.avatarduel.model.*;
+import java.net.URISyntaxException;
+import com.avatarduel.AvatarDuel;
 
 public final class SkillFactory implements CardFactory {
     private static final String SKILL_CSV_FILE_PATH = "card/data/skill.csv";
     private static SkillFactory factory;
     private List<String[]> cards;
 
-    private SkillFactory() throws IOException {
-        CSVReader csvreader = new CSVReader(new File(SKILL_CSV_FILE_PATH), ";");
+    private SkillFactory() throws IOException, URISyntaxException {
+        CSVReader csvreader = new CSVReader(new File(AvatarDuel.class.getResource(SKILL_CSV_FILE_PATH).toURI()), ";");
         csvreader.setSkipHeader(true);
 
         this.cards = csvreader.read(); 
     }
 
-    public static SkillFactory getInstance() throws IOException {
+    public static SkillFactory getInstance() throws Exception {
         if (factory == null){
             factory = new SkillFactory();
         }

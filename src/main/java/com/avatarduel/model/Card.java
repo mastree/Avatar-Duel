@@ -39,4 +39,8 @@ public class Card {
     return this.imgPath;
   }
 
+  public String getCardType(){
+    return this.cardType;
+  }
+
 }

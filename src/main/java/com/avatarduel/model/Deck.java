@@ -1,4 +1,4 @@
-package main.java.com.avatarduel.model;
+package com.avatarduel.model;
 
 import java.util.*;
 import java.io.*;
@@ -9,11 +9,11 @@ public class Deck {
     private static final int TOTAL_CHARACTER = 48;
     private static final int TOTAL_LAND = 16;
     private static final int TOTAL_SKILL = 28;
-    private static final int KARTU_MAX = 60;
+    private static final int KARTU_MAX = 55;
     private List<Card> isiDeck;
     private int jumlahKartu;
 
-    public Deck() throws IOException {
+    public Deck() throws Exception {
         this.isiDeck = new ArrayList<>();
         this.jumlahKartu = 0;
         int x = 0, y = 0, z = 0;
@@ -42,6 +42,7 @@ public class Deck {
     }
 
     public Card pickCard() {
+        this.jumlahKartu--;
         Card tempCard = isiDeck.get(0);
         isiDeck.remove(0);
         return tempCard;
