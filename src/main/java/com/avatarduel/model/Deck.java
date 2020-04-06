@@ -42,14 +42,9 @@ public class Deck {
     }
 
     public Card pickCard() {
-<<<<<<< HEAD
-        return isiDeck.remove(0);
-=======
         this.jumlahKartu--;
-        Card tempCard = isiDeck.get(0);
-        isiDeck.remove(0);
+        Card tempCard = isiDeck.remove(0);
         return tempCard;
->>>>>>> cd91ce5a57c8eba21bdd2f22b57ea075ad57b578
     }
 
     
