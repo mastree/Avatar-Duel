@@ -6,7 +6,7 @@ import java.lang.*;
 import com.avatarduel.model.*;
 
 public final class SkillFactory implements CardFactory {
-    private static final String SKILL_CSV_FILE_PATH = "card/data/skill_aura.csv";
+    private static final String SKILL_CSV_FILE_PATH = "card/data/skill.csv";
     private static SkillFactory factory;
     private List<String[]> cards;
 
@@ -28,16 +28,23 @@ public final class SkillFactory implements CardFactory {
     public Card create(){
         Random rand = new Random(); 
         int len = cards.size();
-        int idx = rand.nextInt(len);
+        int chance = rand.nextInt(100);
+        int idx;
+        
+        if (chance < 60){ // 60% chance to get skill aura
+            idx = rand.nextInt(len - 2);
+        } else{ // 40% chance to get destroy or power up
+            idx = rand.nextInt(2) + len - 2;
+        }
 
         String[] cardInfo = cards.get(idx);
         String name = cardInfo[1];
         Element element;
-        if (cardInfo[2] == "WATER"){
+        if (cardInfo[2].equals("WATER")){
             element = Element.WATER;
-        } else if (cardInfo[2] == "FIRE"){
+        } else if (cardInfo[2].equals("FIRE")){
             element = Element.FIRE;
-        } else if (cardInfo[2] == "EARTH"){
+        } else if (cardInfo[2].equals("EARTH")){
             element = Element.EARTH;
         } else{
             element = Element.AIR;

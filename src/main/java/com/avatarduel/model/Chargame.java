@@ -13,7 +13,7 @@ public class Chargame extends Card {
   }
   
   public Chargame(String name, Element element, String description, String imgPath, int atk, int def, int power) {
-		super(name, element, description, imgPath);
+		super(name, element, description, imgPath, "Character");
 		this.atk = atk;
 		this.def = def;
 		this.power = power;

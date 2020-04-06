@@ -33,11 +33,11 @@ public final class LandFactory implements CardFactory {
         String[] cardInfo = cards.get(idx);
         String name = cardInfo[1];
         Element element;
-        if (cardInfo[2] == "WATER"){
+        if (cardInfo[2].equals("WATER")){
             element = Element.WATER;
-        } else if (cardInfo[2] == "FIRE"){
+        } else if (cardInfo[2].equals("FIRE")){
             element = Element.FIRE;
-        } else if (cardInfo[2] == "EARTH"){
+        } else if (cardInfo[2].equals("EARTH")){
             element = Element.EARTH;
         } else{
             element = Element.AIR;
