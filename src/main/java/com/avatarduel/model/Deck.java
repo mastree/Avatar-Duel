@@ -1,8 +1,9 @@
 package main.java.com.avatarduel.model;
 
 import java.util.*;
+import java.io.*;
 import com.avatarduel.model.*;
-import com.avatarduel.util.CharacterFactory;
+import com.avatarduel.util.*;
 
 public class Deck {
     private static final int TOTAL_CHARACTER = 48;
@@ -12,10 +13,10 @@ public class Deck {
     private List<Card> isiDeck;
     private int jumlahKartu;
 
-    public Deck() {
+    public Deck() throws IOException {
         this.isiDeck = new ArrayList<>();
         this.jumlahKartu = 0;
-        int x, y, z = 0;
+        int x = 0, y = 0, z = 0;
         while (jumlahKartu < KARTU_MAX) {
             if (x < TOTAL_CHARACTER) {
                 isiDeck.add(CharacterFactory.getInstance().create());
