@@ -34,9 +34,9 @@ public final class SkillFactory implements CardFactory {
         int idx;
         
         if (chance < 60){ // 60% chance to get skill aura
-            idx = rand.nextInt(len - 2);
+            idx = rand.nextInt(len - 8);
         } else{ // 40% chance to get destroy or power up
-            idx = rand.nextInt(2) + len - 2;
+            idx = rand.nextInt(8) + len - 8;
         }
 
         String[] cardInfo = cards.get(idx);
@@ -53,9 +53,9 @@ public final class SkillFactory implements CardFactory {
         }
         String description = cardInfo[3];
         String imgPath = cardInfo[4];
-        int atk = Integer.parseInt(cardInfo[5]);
-        int def = Integer.parseInt(cardInfo[6]);
-        int power = Integer.parseInt(cardInfo[7]);
+        int power = Integer.parseInt(cardInfo[5]);
+        int atk = Integer.parseInt(cardInfo[6]);
+        int def = Integer.parseInt(cardInfo[7]);
 
         return new Skill(name, element, description, imgPath, atk, def, power);
     }

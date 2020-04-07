@@ -27,5 +27,11 @@ id;name;element;description;imagepath;power;attack;defense
 90;Ice Prison;WATER;This technique covers an opponent in a prison made of ice.;src/main/resources/com/avatarduel/card/image/skill/Ice Prison.png;3;-4;2
 91;Tangle Mine;WATER;Military weapons invented by Hakoda to aid the Southern Water Tribe's quest to defeat the Fire Nation.;src/main/resources/com/avatarduel/card/image/skill/Tangle Mine.png;2;2;-1
 92;Wolf Armor;WATER;Protective battle gear worn by the warriors of the Southern Water Tribe.;src/main/resources/com/avatarduel/card/image/skill/Wolf Armor.png;2;2;1
-93;Destroy;AIR;Eliminate targeted character.;src/main/src/main/resources/com/avatarduel/card/image/skill/Destroy.png;0;0;0
-94;Power Up;AIR;Reinforce targeted character's attack so it would negate enemy's character defence stance.;src/main/src/main/resources/com/avatarduel/card/image/skill/Power Up.png;0;0;0
+93;Destroy;AIR;Eliminate targeted character.;src/main/resources/com/avatarduel/card/image/skill/Destroy.png;2;0;0
+94;Destroy;WATER;Eliminate targeted character.;src/main/resources/com/avatarduel/card/image/skill/Destroy.png;2;0;0
+95;Destroy;FIRE;Eliminate targeted character.;src/main/resources/com/avatarduel/card/image/skill/Destroy.png;2;0;0
+96;Destroy;EARTH;Eliminate targeted character.;src/main/resources/com/avatarduel/card/image/skill/Destroy.png;2;0;0
+97;Power Up;AIR;Reinforce targeted character's attack so it would negate enemy's character defence stance.;src/main/resources/com/avatarduel/card/image/skill/Power Up.png;2;0;0
+98;Power Up;WATER;Reinforce targeted character's attack so it would negate enemy's character defence stance.;src/main/resources/com/avatarduel/card/image/skill/Power Up.png;2;0;0
+99;Power Up;FIRE;Reinforce targeted character's attack so it would negate enemy's character defence stance.;src/main/resources/com/avatarduel/card/image/skill/Power Up.png;2;0;0
+100;Power Up;EARTH;Reinforce targeted character's attack so it would negate enemy's character defence stance.;src/main/resources/com/avatarduel/card/image/skill/Power Up.png;2;0;0

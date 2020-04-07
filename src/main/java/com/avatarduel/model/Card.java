@@ -1,5 +1,7 @@
 package com.avatarduel.model;
 
+import com.avatarduel.AvatarDuel;
+
 public class Card {
   private String name;
   private Element element;
@@ -36,7 +38,10 @@ public class Card {
   }
 
   public String getPath(){
-    return this.imgPath;
+    int len = imgPath.length();
+    String _cut = imgPath.substring(34, len);
+    String _path = AvatarDuel.class.getResource(_cut).toString();
+    return _path;
   }
 
   public String getCardType(){
