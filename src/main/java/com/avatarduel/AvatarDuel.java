@@ -1,5 +1,8 @@
 package com.avatarduel;
 
+import javafx.application.*;
+import javafx.fxml.FXMLLoader;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -22,9 +25,11 @@ import com.avatarduel.model.*;
 import com.avatarduel.util.*;
 
 public class AvatarDuel extends Application {
-  
+
   Stage window;
-  Scene scene2;
+  Scene gamePlay;
+  Scene sceneCard;
+  Scene mainMenu;
 
   public static void main(String[] args) {
       launch(args);
@@ -33,13 +38,24 @@ public class AvatarDuel extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
       window = primaryStage;
-      Card kartu = SkillFactory.getInstance().create();
 
-      GridPane grid = CardHover.cardHover(kartu);
-      scene2 = new Scene(grid, 600, 600);
+      Parent temp;
+      try{
+//          temp = FXMLLoader.load(getClass().getResource("GamePlay.fxml"));
+//          gamePlay = new Scene(temp, 800, 600);
 
-      window.setScene(scene2);
-      window.setTitle("Kartu");
+          temp = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+          mainMenu = new Scene(temp, 800, 800);
+      } catch (Exception e){
+          System.out.println("Error :" + e.getMessage());
+          return;
+      }
+//      Card kartu = SkillFactory.getInstance().create();
+//      Pane pane = CardHover.cardHover(kartu);
+//      sceneCard = new Scene(pane, 300, 600);
+//      window.setScene(sceneCard);
+      window.setScene(mainMenu);
+      window.setTitle("Avatar-Duel");
       window.show();
-  }
+    }
 }

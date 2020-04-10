@@ -6,10 +6,12 @@ import com.avatarduel.model.*;
 import com.avatarduel.util.*;
 
 public class Deck {
+    public static final String PATH = "card/image/Deck.png";
     private static final int TOTAL_CHARACTER = 48;
     private static final int TOTAL_LAND = 16;
     private static final int TOTAL_SKILL = 28;
     private static final int KARTU_MAX = 55;
+    private int jumlahAwalKartu;
     private List<Card> isiDeck;
     private int jumlahKartu;
 
@@ -35,11 +37,13 @@ public class Deck {
             }
             Collections.shuffle(isiDeck);
         }
+        this.jumlahAwalKartu = this.jumlahKartu;
     }
 
     public int getJumlahKartu() {
         return this.jumlahKartu;
     }
+    public int getJumlahAwalKartu() { return this.jumlahAwalKartu; }
 
     public Card pickCard() {
         this.jumlahKartu--;
@@ -47,6 +51,6 @@ public class Deck {
         return tempCard;
     }
 
-    
+
 
 }

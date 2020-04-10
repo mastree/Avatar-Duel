@@ -5,26 +5,31 @@ import java.util.*;
 import java.lang.*;
 
 public class Field{
-    private static final int COL = 8; // Column of field
+    public static final int COL = 6; // Column of field
 
-    public static Player[] player;
-    public static Chargame[][] chara;
-    public static boolean[][] isDef;
-    public static Skill[][] skill;
-    public static int[][] skillPointer;
+    public Player[] player;
+    public Chargame[][] chara;
+    public boolean[][] isDef;
+    public Skill[][] skill;
+    public Pair[][] skillPointer;
 
-    public static Map<Element, Integer>[] currentLand, maxLand;
+    public Map<Element, Integer>[] currentLand, maxLand;
 
-    private static int turn;
+    public int turn;
 
-    public static void initGame(){
+    public Field(){
         player = new Player[2];
-
+        try {
+            player[0] = new Player();
+            player[1] = new Player();
+        } catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
         chara = new Chargame[2][COL];
         isDef = new boolean[2][COL];
         skill = new Skill[2][COL];
 
-        skillPointer = new int[2][COL];
+        skillPointer = new Pair[2][COL];
         currentLand = new Map[2];
         currentLand[0] = new HashMap<Element, Integer>();
         currentLand[1] = new HashMap<Element, Integer>();
@@ -32,6 +37,9 @@ public class Field{
         maxLand[0] = new HashMap<Element, Integer>();
         maxLand[1] = new HashMap<Element, Integer>();
         for (int i=0;i<2;i++){
+            for (int j=0;j<COL;j++){
+                skillPointer[i][j] = new Pair();
+            }
             for (Element temp : Element.values()){
                 currentLand[i].put(temp, 0);
                 maxLand[i].put(temp,0);
@@ -40,7 +48,7 @@ public class Field{
         turn = 0;
     }
 
-    public static void changeTurn(){
+    public void changeTurn(){
         turn = (turn + 1) % 2;
         for (Element temp : Element.values()){
             int mval = maxLand[turn].get(temp);
@@ -48,7 +56,7 @@ public class Field{
         }
     }
 
-    public static void placeLand(Land Card){
+    public void placeLand(Land Card){
         Element temp = Card.getElement();
         int nval = currentLand[turn].get(temp);
         currentLand[turn].put(temp, nval + 1);
@@ -56,71 +64,116 @@ public class Field{
         maxLand[turn].put(temp, nval + 1);
     }
 
-    public static void placeCharacter(Chargame card, int idx){
+    public boolean placeCharacter(Chargame card, int idx){
         int curPower = currentLand[turn].get(card.getElement());
-        if (curPower >= card.getPower()){
+        if (curPower >= card.getPower() && chara[turn][idx] == null){
             chara[turn][idx] = card;
             isDef[turn][idx] = false;
             currentLand[turn].put(card.getElement(), curPower - card.getPower());
+            return true;
         } else{
             // notify player
+            return false;
         }
     }
 
-    public static void changeCharacterStance(int idx){
+    public boolean placeSkill(Skill card, int idx){
+        int curPower = currentLand[turn].get(card.getElement());
+        if (curPower >= card.getPower() && skill[turn][idx] == null){
+            skill[turn][idx] = card;
+            currentLand[turn].put(card.getElement(), curPower - card.getPower());
+            return true;
+        } else{
+            // notify player
+            return false;
+        }
+    }
+
+    public boolean setSkillTarget(Pair asal, int playerId, int idx){
+        if (chara[playerId][idx] != null){
+            skillPointer[asal.first][asal.second] = new Pair(playerId, idx);
+            if (skill[asal.first][asal.second].getSkillType().equals("Destroy")){
+                killChara(playerId, idx);
+            }
+        } else return false;
+        return true;
+    }
+
+    public void changeCharacterStance(int idx){
         isDef[turn][idx] = !isDef[turn][idx];
     }
 
-    public static void placeSkillwithTarget(Skill card, int idx1, int idx2){
+    public void placeSkillwithTarget(Skill card, int idx1, Pair target){
         int curPower = currentLand[turn].get(card.getElement());
         if (curPower >= card.getPower()){
             skill[turn][idx1] = card;
-            skillPointer[turn][idx1] = idx2;
+            skillPointer[turn][idx1] = target;
             currentLand[turn].put(card.getElement(), curPower - card.getPower());
             
-            if (card.getSkillType() == "Destroy"){
-                int turn2 = (turn + 1) % 2;
-                killChara(turn2, idx2);
+            if (card.getSkillType().equals("Destroy")){
+                killChara(target.first, target.second);
             } 
         } else{
             // notify player
         }
     }
 
-    public static Card getCardOnHand(int idx){
-        return player[turn].cardsOnHand.get(idx);
+    public Card getCardOnHand(int playerId, int idx){
+        if (idx < 0 || idx >= 7) return null;
+        return player[playerId].cardsOnHand[idx];
     }
 
-    public static int getCharaAtk(int playerId, int idx){
+    public int getCharaAtk(int playerId, int idx){
+        if (chara[playerId][idx] == null) return 0;
         int ret = chara[playerId][idx].getAtk();
+        int other = (playerId + 1) % 2;
 
         for (int i=0;i<COL;i++){
-            if (skill[playerId][i] != null && skillPointer[playerId][i] == idx){
-                if (skill[playerId][i].getSkillType() == "Aura"){
+            if (skill[playerId][i] != null && skillPointer[playerId][i].equals(playerId, idx)){
+                if (skill[playerId][i].getSkillType().equals("Aura")){
                     ret += skill[playerId][i].getAtk();
                 }
             }
-        }
-        return ret;
-    }
-
-    public static int getCharaDef(int playerId, int idx){
-        int ret = chara[playerId][idx].getDef();
-
-        for (int i=0;i<COL;i++){
-            if (skill[playerId][i] != null && skillPointer[playerId][i] == idx){
-                if (skill[playerId][i].getSkillType() == "Aura"){
-                    ret += skill[playerId][i].getDef();
+            if (skill[other][i] != null && skillPointer[other][i].equals(playerId, idx)){
+                if (skill[other][i].getSkillType().equals("Aura")){
+                    ret += skill[other][i].getAtk();
                 }
             }
         }
         return ret;
     }
 
-    public static boolean getCharaPowerUpStatus(int playerId, int idx){
+    public int getCharaDef(int playerId, int idx){
+        if (chara[playerId][idx] == null) return 0;
+        int ret = chara[playerId][idx].getDef();
+        int other = (playerId + 1) % 2;
+
         for (int i=0;i<COL;i++){
-            if (skill[playerId][i] != null && skillPointer[playerId][i] == idx){
-                if (skill[playerId][i].getSkillType() == "Power Up"){
+            if (skill[playerId][i] != null && skillPointer[playerId][i].equals(playerId, idx)){
+                if (skill[playerId][i].getSkillType().equals("Aura")){
+                    ret += skill[playerId][i].getDef();
+                }
+            }
+            if (skill[other][i] != null && skillPointer[other][i].equals(playerId, idx)){
+                if (skill[other][i].getSkillType().equals("Aura")){
+                    ret += skill[other][i].getDef();
+                }
+            }
+        }
+        return ret;
+    }
+
+    public boolean getCharaPowerUpStatus(int playerId, int idx){
+        if (chara[playerId][idx] == null) return false;
+        int other = (playerId + 1) % 2;
+        for (int i=0;i<COL;i++){
+            if (skill[playerId][i] != null && skillPointer[playerId][i].equals(playerId, idx)){
+                if (skill[playerId][i].getSkillType().equals("Power Up")){
+                    return true;
+                }
+            }
+            if (skill[other][i] != null && skillPointer[other][i].equals(playerId, idx)){
+                if (skill[other][i].getSkillType().equals("Power Up")){
                     return true;
                 }
             }
@@ -128,37 +181,29 @@ public class Field{
         return false;
     }
 
-    public static void killChara(int playerId, int idx){
-        int otherPlayer = (playerId + 1) % 2;
+    public void killChara(int playerId, int idx){
+        int other = (playerId + 1) % 2;
         chara[playerId][idx] = null;
         for (int i=0;i<COL;i++){
-            if (skill[playerId][i] != null && skillPointer[playerId][i] == idx){
-                if (skill[playerId][i].getSkillType() != "Destroy"){
-                    // removeSkill(int playerId, int idx);
-                    skill[playerId][i] = null;
-                    skillPointer[playerId][i] = -1;
-                }
-                
+            if (skill[playerId][i] != null && skillPointer[playerId][i].equals(playerId, idx)){
+                skill[playerId][i] = null;
+                skillPointer[playerId][i] = new Pair();
             }
-
-            if (skill[otherPlayer][i] != null && skillPointer[otherPlayer][i] == idx){
-                if (skill[otherPlayer][i].getSkillType() == "Destroy"){
-                    // removeSkill(int playerId, int idx);
-                    skill[otherPlayer][i] = null;
-                    skillPointer[otherPlayer][i] = -1;
-                }
+            if (skill[other][i] != null && skillPointer[other][i].equals(playerId, idx)){
+                skill[other][i] = null;
+                skillPointer[other][i] = new Pair();
             }
         }
     }
 
-    public static void substractHealth(int playerId, int delta){
+    public void substractHealth(int playerId, int delta){
         player[playerId].health -= delta;
         if (player[playerId].health <= 0){
             endGame((playerId + 1) % 2);
         }
     }   
 
-    public static void attack(int idx1, int idx2){
+    public void attack(int idx1, int idx2){
         int turn2 = (turn + 1) % 2;
         int damage = getCharaAtk(turn, idx1);
         int minimum;
@@ -183,7 +228,7 @@ public class Field{
         }
     }
 
-    public static void endGame(int winnerId){
+    public void endGame(int winnerId){
         // Permainan selesai
     }
 
