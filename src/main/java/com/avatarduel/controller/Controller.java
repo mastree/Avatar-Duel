@@ -1,8 +1,8 @@
-package com.avatarduel;
+package com.avatarduel.controller;
 
+import com.avatarduel.AvatarDuel;
+import com.avatarduel.renderer.CardRender;
 import com.avatarduel.model.*;
-import com.avatarduel.util.CharacterFactory;
-import com.avatarduel.util.SkillFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -24,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+//import jdk.tools.jaotc.Main;
 
 import java.net.URL;
 import java.util.*;
@@ -31,6 +33,7 @@ import java.util.*;
 public class Controller implements Initializable {
     public Field field;
 
+    @FXML private SplitPane spDummy;
     public Button backToMainMenu;
 
     public AnchorPane myField;
@@ -59,7 +62,6 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // VARIABLES
         lock = false;
-        field = new Field();
         cardOnHand = new Pane[2][7];
         cardOnHand[0][0] = myCard1;
         cardOnHand[0][1] = myCard2;
@@ -122,24 +124,29 @@ public class Controller implements Initializable {
         onFieldSkillPicked = new Pair(-1, -1);
 
         // RENDER
-        for (int i=0;i<2;i++){
-            for (int j=0;j<7;j++){
-                renderOnHand(i, j);
-            }
-        }
-        for (int i=0;i<2;i++){
-            for (int j=0;j<6;j++){
-                renderCharaOnField(i, j);
-                renderSkillOnField(i, j);
-            }
-        }
-        for (int i=0;i<2;i++){
-            renderDeck(i);
-            renderLand(i);
-            renderHealth(i);
-        }
+//        for (int i=0;i<2;i++){
+//            for (int j=0;j<7;j++){
+//                renderOnHand(i, j);
+//            }
+//        }
+//        for (int i=0;i<2;i++){
+//            for (int j=0;j<6;j++){
+//                renderCharaOnField(i, j);
+//                renderSkillOnField(i, j);
+//            }
+//        }
+//        for (int i=0;i<2;i++){
+//            renderDeck(i);
+//            renderLand(i);
+//            renderHealth(i);
+//        }
 
         System.out.println("View is now loaded!");
+    }
+    public void initField(Field field){
+        this.field = field;
+        renderAll();
+//        goToDrawPhase();
     }
     public void noOnHandPicked(){
         if (!onHandPicked.equals(-1, -1)){
@@ -164,10 +171,49 @@ public class Controller implements Initializable {
         Scene gamePlay;
 
         try{
-            temp = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+            temp = FXMLLoader.load(AvatarDuel.class.getResource("MainMenu.fxml"));
             gamePlay = new Scene(temp, 800, 600);
 
             Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            app_stage.setScene(gamePlay);
+            app_stage.centerOnScreen();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    public void goToDrawPhase(){
+        FXMLLoader loader;
+        Parent temp;
+        Scene gamePlay;
+
+        if (backToMainMenu == null || ((Stage) backToMainMenu.getScene().getWindow()) == null) System.out.println("Nani");
+        try {
+            loader = new FXMLLoader(AvatarDuel.class.getResource("DrawPhase.fxml"));
+            temp = loader.load();
+            gamePlay = new Scene(temp, 1000, 650);
+            DrawPhaseController controller = loader.<DrawPhaseController>getController();
+            controller.initField(field);
+
+            Stage app_stage = (Stage) backToMainMenu.getScene().getWindow();
+            app_stage.close();
+            app_stage.setScene(gamePlay);
+            app_stage.centerOnScreen();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    public void goToMainPhase(){
+        FXMLLoader loader;
+        Parent temp;
+        Scene gamePlay;
+        try {
+            loader = new FXMLLoader(AvatarDuel.class.getResource("MainPhase.fxml"));
+            temp = loader.load();
+            gamePlay = new Scene(temp, 1000, 650);
+            MainPhaseController controller = loader.<MainPhaseController>getController();
+            controller.initField(field);
+
+            Stage app_stage = (Stage) myCard1.getScene().getWindow();
             app_stage.setScene(gamePlay);
             app_stage.centerOnScreen();
         } catch (Exception e){
@@ -226,7 +272,7 @@ public class Controller implements Initializable {
         Pane pane = activeChara[playerId][idx];
 
         pane.getChildren().clear();
-        pane.getChildren().add(CardRender.activeChara(kartu, field.getCharaAtk(playerId, idx), field.getCharaDef(playerId, idx)));
+        pane.getChildren().add(CardRender.activeChara(kartu, field.getCharaAtk(playerId, idx), field.getCharaDef(playerId, idx), field.isDef[playerId][idx]));
     }
     public void renderSkillOnField(int playerId, int idx){
         Card kartu = field.skill[playerId][idx];
@@ -242,8 +288,8 @@ public class Controller implements Initializable {
         int a = field.player[playerId].deck.getJumlahKartu();
         int b = field.player[playerId].deck.getJumlahAwalKartu();
         Label sisa = new Label("Deck\n" + a + " / " + b);
-        String _path = getClass().getResource(Deck.PATH).toString();
-        System.out.println(_path);
+        String _path = AvatarDuel.class.getResource(Deck.PATH).toString();
+//        System.out.println(_path);
         Image image = new Image(_path);
         ImageView imageView = new ImageView(image);
         res.getChildren().addAll(sisa, imageView);

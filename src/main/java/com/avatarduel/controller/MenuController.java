@@ -1,20 +1,14 @@
-package com.avatarduel;
+package com.avatarduel.controller;
 
-import com.avatarduel.model.Card;
+import com.avatarduel.AvatarDuel;
 import com.avatarduel.model.Field;
-import com.avatarduel.util.CharacterFactory;
-import com.avatarduel.util.SkillFactory;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -23,7 +17,6 @@ import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {
     public Button startNewGame;
-    public Pane upperLeftPanel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -31,17 +24,22 @@ public class MenuController implements Initializable {
     }
 
     public void StartGame(ActionEvent event) {
+        FXMLLoader loader;
         Parent temp;
         Scene gamePlay;
         try {
-            temp = FXMLLoader.load(getClass().getResource("GamePlay.fxml"));
-            gamePlay = new Scene(temp, 1000, 600);
+            loader = new FXMLLoader(AvatarDuel.class.getResource("fxml/DrawPhase.fxml"));
+            temp = (Parent) loader.load();
+
+            gamePlay = new Scene(temp, 1000, 650);
+            DrawPhaseController controller = loader.<DrawPhaseController>getController();
+            controller.initField(new Field());
 
             Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             app_stage.setScene(gamePlay);
             app_stage.centerOnScreen();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             return;
         }
     }

@@ -41,19 +41,12 @@ public class AvatarDuel extends Application {
 
       Parent temp;
       try{
-//          temp = FXMLLoader.load(getClass().getResource("GamePlay.fxml"));
-//          gamePlay = new Scene(temp, 800, 600);
-
-          temp = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+          temp = FXMLLoader.load(getClass().getResource("fxml/MainMenu.fxml"));
           mainMenu = new Scene(temp, 800, 800);
       } catch (Exception e){
           System.out.println("Error :" + e.getMessage());
           return;
       }
-//      Card kartu = SkillFactory.getInstance().create();
-//      Pane pane = CardHover.cardHover(kartu);
-//      sceneCard = new Scene(pane, 300, 600);
-//      window.setScene(sceneCard);
       window.setScene(mainMenu);
       window.setTitle("Avatar-Duel");
       window.show();

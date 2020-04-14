@@ -1,4 +1,4 @@
-package com.avatarduel;
+package com.avatarduel.renderer;
 
 import com.avatarduel.model.Card;
 import com.avatarduel.model.Chargame;
@@ -57,7 +57,6 @@ public class CardRender{
     stack.getChildren().addAll(elementColor, cardElement);
     stack.setAlignment(Pos.CENTER_RIGHT);
     StackPane.setMargin(cardElement, new Insets(0, 5, 0, 0));
-//    elementColor.fitHeightProperty().bind(stack.heightProperty());
     
     hbox.getChildren().addAll(cardName, stack);
     HBox.setHgrow(stack, Priority.ALWAYS);
@@ -75,8 +74,7 @@ public class CardRender{
     StackPane stack = new StackPane();
   
     stack.getChildren().add(cardType);
-    stack.setAlignment(Pos.CENTER_RIGHT); 
-    // StackPane.setMargin(cardType, new Insets(0, 0, 0, 0)); 
+    stack.setAlignment(Pos.CENTER_RIGHT);
     
     if (kartu.getCardType().equals("Skill")){
       Text cardSkillType = new Text(((Skill)kartu).getSkillType());
@@ -263,7 +261,7 @@ public class CardRender{
     return res;
   }
 
-  public static VBox activeChara(Card kartu, int addAtk, int addDef){
+  public static VBox activeChara(Card kartu, int addAtk, int addDef, boolean isDef){
     VBox res = new VBox();
     String cssLayout;
     if (kartu == null){
@@ -274,6 +272,8 @@ public class CardRender{
       res.setMinHeight(60);
       return res;
     }
+    addAtk -= ((Chargame) kartu).getAtk();
+    addDef -= ((Chargame) kartu).getDef();
     cssLayout = "-fx-border-color: black;\n" +
             "-fx-background-color: ";
     Element element = kartu.getElement();
@@ -289,9 +289,15 @@ public class CardRender{
 
     res.setStyle(cssLayout);
     res.setSpacing(2);
-    res.setMinWidth(50);
-    res.setMinHeight(60);
-    res.setAlignment(Pos.CENTER_LEFT);
+    if (isDef){
+      res.setMinWidth(80);
+      res.setMinHeight(50);
+      res.setAlignment(Pos.CENTER);
+    } else{
+      res.setMinWidth(50);
+      res.setMinHeight(60);
+      res.setAlignment(Pos.CENTER_LEFT);
+    }
 
     Label power;
     Label attack;
@@ -309,6 +315,19 @@ public class CardRender{
     defense.setFont(Font.font("Arial", MAX_FONT_SIZE + 1));
     res.getChildren().addAll(power, attack, defense);
 
+    return res;
+  }
+
+  public static VBox activeCharaandGlow(Card kartu, int addAtk, int addDef, boolean isDef){
+    VBox res = activeChara(kartu, addAtk, addDef, isDef);
+    DropShadow borderGlow = new DropShadow();
+    borderGlow.setColor(Color.DARKGREEN);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setWidth(25);
+    borderGlow.setHeight(25);
+
+    res.setEffect(borderGlow);
     return res;
   }
 }

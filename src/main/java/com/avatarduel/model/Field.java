@@ -9,6 +9,7 @@ public class Field{
 
     public Player[] player;
     public Chargame[][] chara;
+    public boolean[][] charaBaru;
     public boolean[][] isDef;
     public Skill[][] skill;
     public Pair[][] skillPointer;
@@ -26,6 +27,7 @@ public class Field{
             System.out.println("Error: " + e.getMessage());
         }
         chara = new Chargame[2][COL];
+        charaBaru = new boolean[2][COL];
         isDef = new boolean[2][COL];
         skill = new Skill[2][COL];
 
@@ -38,11 +40,12 @@ public class Field{
         maxLand[1] = new HashMap<Element, Integer>();
         for (int i=0;i<2;i++){
             for (int j=0;j<COL;j++){
+                charaBaru[i][j] = false;
                 skillPointer[i][j] = new Pair();
             }
             for (Element temp : Element.values()){
                 currentLand[i].put(temp, 0);
-                maxLand[i].put(temp,0);
+                maxLand[i].put(temp, 0);
             }
         }
         turn = 0;
@@ -53,6 +56,9 @@ public class Field{
         for (Element temp : Element.values()){
             int mval = maxLand[turn].get(temp);
             currentLand[turn].put(temp, mval);
+        }
+        for (int i=0;i<COL;i++){
+            charaBaru[turn][i] = false;
         }
     }
 
@@ -70,6 +76,7 @@ public class Field{
             chara[turn][idx] = card;
             isDef[turn][idx] = false;
             currentLand[turn].put(card.getElement(), curPower - card.getPower());
+            charaBaru[turn][idx] = true;
             return true;
         } else{
             // notify player
@@ -78,6 +85,7 @@ public class Field{
     }
 
     public boolean placeSkill(Skill card, int idx){
+        if (!canPlaceSkills()) return false;
         int curPower = currentLand[turn].get(card.getElement());
         if (curPower >= card.getPower() && skill[turn][idx] == null){
             skill[turn][idx] = card;
@@ -119,7 +127,7 @@ public class Field{
     }
 
     public Card getCardOnHand(int playerId, int idx){
-        if (idx < 0 || idx >= 7) return null;
+        if (idx < 0 || idx >= Player.MAX_CARD) return null;
         return player[playerId].cardsOnHand[idx];
     }
 
@@ -196,17 +204,28 @@ public class Field{
         }
     }
 
+    public void removeSkill(int playerId, int idx){
+        if (skill[playerId][idx] == null) return;
+        skill[playerId][idx] = null;
+        skillPointer[playerId][idx] = new Pair();
+    }
+
     public void substractHealth(int playerId, int delta){
         player[playerId].health -= delta;
         if (player[playerId].health <= 0){
+            player[playerId].health = 0;
             endGame((playerId + 1) % 2);
         }
     }   
 
-    public void attack(int idx1, int idx2){
+    public boolean attack(int idx1, int idx2){
         int turn2 = (turn + 1) % 2;
         int damage = getCharaAtk(turn, idx1);
         int minimum;
+        if (charaBaru[turn][idx1]) return false;
+        if (chara[turn2][idx2] == null){
+            return attack(idx1);
+        }
         if (isDef[turn2][idx2]){
             minimum = getCharaDef(turn2, idx2);
 
@@ -217,6 +236,8 @@ public class Field{
                 } else{
                     killChara(turn2, idx2);
                 }
+                charaBaru[turn][idx1] = true;
+                return true;
             }
         } else{
             minimum = getCharaAtk(turn2, idx2);
@@ -224,106 +245,42 @@ public class Field{
             if (damage >= minimum){
                 killChara(turn2, idx2);
                 substractHealth(turn2, damage - minimum);
+                charaBaru[turn][idx1] = true;
+                return true;
             }
         }
+        return false;
+    }
+
+    public boolean attack(int idx){
+        int turn2 = (turn + 1) % 2;
+        int damage = getCharaAtk(turn, idx);
+        boolean bisa = true;
+        if (charaBaru[turn][idx]) return false;
+        for (int j=0;j<COL;j++){
+            if (chara[turn2][j] != null){
+                bisa = false;
+                break;
+            }
+        }
+        if (bisa){
+            charaBaru[turn][idx] = true;
+            substractHealth(turn2, damage);
+            return true;
+        }
+        return false;
     }
 
     public void endGame(int winnerId){
         // Permainan selesai
     }
 
+    public boolean canPlaceSkills(){
+        for (int i=0;i<2;i++){
+            for (int j=0;j<COL;j++){
+                if (chara[i][j] != null) return true;
+            }
+        }
+        return false;
+    }
 }
-
-// package com.avatarduel.model;
-
-// public class Field{
-//     private Player p;
-//     private Chargame[] karakter;
-//     private boolean[] posisi;
-//     private Skill[] skillfield;
-//     private int[] skillpos;
-//     private int neffkar;
-//     private int neffskill;
-
-//     public Field(Player play){
-//         karakter = new Chargame[7];
-//         posisi = new boolean[7];
-//         skillfield = new Skill[7];
-//         skillpos = new int[7];
-//         neffkar = 0;
-//         neffskill = 0;
-//         p = play;
-//     }
-
-//     public void playChar(int idx){
-//         if (neffkar < 7){
-//             Chargame c = p.removeChar(idx);
-//             karakter[neffkar] = c;
-//             posisi[neffkar] = attack;
-//             karakter[posisi[neffkar]]
-//             neffkar++;
-//         }
-//         else{
-//             //throw exception atau langsung print error?
-//         }
-//     }
-
-//     public void playSkill(int idx){
-//         if (neffskill < 7) {
-//             Skill s = p.removeSkill(idx);
-//             skillfield[neffskill] = s;
-//             skillpos[neffskill] = posisiChar;
-//             neffskill++;
-//         }
-//         else{
-//             //throw exception atau langsung print error?
-//         }
-//     }
-
-//     public void changePos(int pos){
-//         if (pos < neffkar){
-//             posisi[pos] = !(posisi[pos]);
-//         }
-//         else {
-//             //throw exception atau langsung print error?
-//         }
-//     }
-
-//     public void discardSpell(int pos){
-//         if (pos < neffskill && neffskill>0){
-//             Skill temp = skillfield[pos];
-//             int atk = temp.getAtk();
-//             int def = temp.getDef();
-//             int idx = skillpos[pos];
-//             int kar = karakter[idx];
-//             for (int i=pos; i<5;i++){
-//                 skillfield[i] = skillfield[i+1];
-//                 skillpos[i] = skillpos[i+1];
-//             }
-//             neffskill--;
-//         }
-//         else{
-//             //throw exception atau langsung print error?
-//         }
-//     }
-
-//     public int getTotalAtk(int pos){
-//         int temp = karakter[pos].getAtk();
-//         for (int i=0;i<7;i++){
-//             if (skillpos[i] == pos){
-//                 temp+=skillfield[i].getAtk();
-//             }
-//         }
-//         return temp;
-//     }
-
-//     public int getTotalDef(int pos){
-//         int temp = karakter[pos].getDef();
-//         for (int i=0;i<7;i++){
-//             if (skillpos[i] == pos){
-//                 temp+=skillfield[i].getDef();
-//             }
-//         }
-//         return temp;
-//     }
-// }

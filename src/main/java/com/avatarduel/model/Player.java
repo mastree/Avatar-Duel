@@ -19,7 +19,7 @@ public class Player {
         this.health = 80;
         this.deck = new Deck();
 
-        for (int i=1;i<=7;i++){
+        for (int i=1;i<=MAX_CARD;i++){
             this.takeFromDeck();
         }
     }
@@ -29,7 +29,7 @@ public class Player {
         for (slot=0;slot<MAX_CARD;slot++){
             if (cardsOnHand[slot] == null) break;
         }
-        if (slot == -1) return;
+        if (slot == MAX_CARD) return;
         if (this.deck.getJumlahKartu() == 0){
             return;
         }
@@ -38,7 +38,7 @@ public class Player {
     }
 
     public Card removeCard(int idx){
-        if (idx < 0 || idx >= 7) return null;
+        if (idx < 0 || idx >= MAX_CARD) return null;
         Card temp = this.cardsOnHand[idx];
         this.cardsOnHand[idx] = null;
         return temp;
