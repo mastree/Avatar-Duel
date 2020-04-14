@@ -229,7 +229,7 @@ public class Field{
         if (isDef[turn2][idx2]){
             minimum = getCharaDef(turn2, idx2);
 
-            if (damage >= minimum){
+            if (damage > minimum){
                 if (getCharaPowerUpStatus(turn, idx1)){
                     killChara(turn2, idx2);
                     substractHealth(turn2, damage - minimum);
@@ -242,7 +242,7 @@ public class Field{
         } else{
             minimum = getCharaAtk(turn2, idx2);
 
-            if (damage >= minimum){
+            if (damage > minimum){
                 killChara(turn2, idx2);
                 substractHealth(turn2, damage - minimum);
                 charaBaru[turn][idx1] = true;
