@@ -15,6 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class FieldRender{
+    public static final String NOT_FOUND_PATH = "card/image/ImageNotFound.png";
+
     public static void renderOnHand(Pane pane, Card kartu){
         pane.getChildren().clear();
         pane.getChildren().add(CardRender.cardNotHover(kartu));
@@ -35,8 +37,17 @@ public class FieldRender{
         int a = field.player[playerId].deck.getJumlahKartu();
         int b = field.player[playerId].deck.getJumlahAwalKartu();
         Label sisa = new Label("Deck\n" + a + " / " + b);
-        String _path = AvatarDuel.class.getResource(Deck.PATH).toString();
-        Image image = new Image(_path);
+        String _path;
+        Image image;
+        try{
+            _path = AvatarDuel.class.getResource(Deck.PATH).toString();
+            image = new Image(_path);
+        } catch (Exception e){
+            System.out.println("Foto deck tidak ditemukan");
+            System.out.println(e.getMessage());
+            _path = AvatarDuel.class.getResource(NOT_FOUND_PATH).toString();
+            image = new Image(_path);
+        }
         ImageView imageView = new ImageView(image);
         res.getChildren().addAll(sisa, imageView);
 

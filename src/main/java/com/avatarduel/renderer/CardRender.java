@@ -1,9 +1,7 @@
 package com.avatarduel.renderer;
 
-import com.avatarduel.model.Card;
-import com.avatarduel.model.Chargame;
-import com.avatarduel.model.Element;
-import com.avatarduel.model.Skill;
+import com.avatarduel.AvatarDuel;
+import com.avatarduel.model.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -18,6 +16,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class CardRender{
+  public static final String NOT_FOUND_PATH = "card/image/ImageNotFound.png";
+
   public static final double MAX_FONT_SIZE = 9;
   public static final double MAX_TEXT_BOX_WIDTH = 285 / 2;
   public static final double MAX_TEXT_BOX_HEIGHT = 90 / 2;
@@ -152,8 +152,15 @@ public class CardRender{
   public static Pane cardHover(Card kartu){
     GridPane grid = new GridPane();
     grid.setPadding(new Insets(5, 10, 5, 10));
-    Image image = new Image(kartu.getPath());
+    Image image;
     ImageView imageView = new ImageView();
+    try{
+      image = new Image(kartu.getPath());
+    } catch (Exception e){
+      System.out.println("Foto kartu tidak ditemukan");
+      System.out.println(e.getMessage());
+      image = new Image(AvatarDuel.class.getResource(NOT_FOUND_PATH).toString());
+    }
     imageView.setImage(image);
 //    imageView.setFitHeight(300);
     imageView.setFitWidth(MAX_TEXT_BOX_WIDTH + 10);
