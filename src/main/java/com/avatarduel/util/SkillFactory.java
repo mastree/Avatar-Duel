@@ -48,6 +48,8 @@ public final class SkillFactory implements CardFactory {
             element = Element.FIRE;
         } else if (cardInfo[2].equals("EARTH")){
             element = Element.EARTH;
+        } else if (cardInfo[2].equals("ENERGY")){
+            element = Element.ENERGY;
         } else{
             element = Element.AIR;
         }
