@@ -7,9 +7,9 @@ import com.avatarduel.util.*;
 
 public class Deck {
     public static final String PATH = "card/image/Deck.png";
-    private static final int TOTAL_CHARACTER = 48;
-    private static final int TOTAL_LAND = 16;
-    private static final int TOTAL_SKILL = 28;
+    private static final int TOTAL_CHARACTER = 54;
+    private static final int TOTAL_LAND = 19;
+    private static final int TOTAL_SKILL = 38;
     private static final int KARTU_MAX = 55;
     private int jumlahAwalKartu;
     private List<Card> isiDeck;
