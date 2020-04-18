@@ -35,3 +35,5 @@ id;name;element;description;imagepath;power;attack;defense
 98;Power Up;WATER;Reinforce targeted character's attack so it would negate enemy's character defence stance.;src/main/resources/com/avatarduel/card/image/skill/Power Up.png;2;0;0
 99;Power Up;FIRE;Reinforce targeted character's attack so it would negate enemy's character defence stance.;src/main/resources/com/avatarduel/card/image/skill/Power Up.png;2;0;0
 100;Power Up;EARTH;Reinforce targeted character's attack so it would negate enemy's character defence stance.;src/main/resources/com/avatarduel/card/image/skill/Power Up.png;2;0;0
+110;Destroy;ENERGY;Eliminate targeted character.;src/main/resources/com/avatarduel/card/image/skill/Destroy.png;2;0;0
+111;Power Up;ENERGY;Reinforce targeted character's attack so it would negate enemy's character defence stance.;src/main/resources/com/avatarduel/card/image/skill/Power Up.png;2;0;0

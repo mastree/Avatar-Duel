@@ -65,42 +65,50 @@ public class FieldRender{
         String fire = "Fire : " + field.currentLand[playerId].get(Element.FIRE) + " / " + field.maxLand[playerId].get(Element.FIRE);
         String water = "Water : " + field.currentLand[playerId].get(Element.WATER) + " / " + field.maxLand[playerId].get(Element.WATER);
         String air = "Air : " + field.currentLand[playerId].get(Element.AIR) + " / " + field.maxLand[playerId].get(Element.AIR);
+        String energy = "Energy : " + field.currentLand[playerId].get(Element.ENERGY) + " / " + field.maxLand[playerId].get(Element.ENERGY);
 
         Label label1 = new Label(earth);
         Label label2 = new Label(fire);
         Label label3 = new Label(water);
         Label label4 = new Label(air);
+        Label label5 = new Label(energy);
 
         Rectangle earthColor = new Rectangle(10.0, 25.0 / 2);
         Rectangle fireColor = new Rectangle(10.0, 25.0 / 2);
         Rectangle waterColor = new Rectangle(10.0, 25.0 / 2);
         Rectangle airColor = new Rectangle(10.0, 25.0 / 2);
-
+        Rectangle energyColor = new Rectangle(10.0, 25.0 / 2);
+        
         earthColor.setFill(Color.web(CardRender.EARTH_COLOR));
         fireColor.setFill(Color.web(CardRender.FIRE_COLOR));
         waterColor.setFill(Color.web(CardRender.WATER_COLOR));
         airColor.setFill(Color.web(CardRender.AIR_COLOR));
+        energyColor.setFill(Color.web(CardRender.ENERGY_COLOR));
 
         HBox box1 = new HBox();
         HBox box2 = new HBox();
         HBox box3 = new HBox();
         HBox box4 = new HBox();
+        HBox box5 = new HBox();
         box1.setSpacing(13);
         box2.setSpacing(13);
         box3.setSpacing(13);
         box4.setSpacing(13);
+        box5.setSpacing(13);
 
         box1.getChildren().addAll(label1, earthColor);
         box2.getChildren().addAll(label2, fireColor);
         box3.getChildren().addAll(label3, waterColor);
         box4.getChildren().addAll(label4, airColor);
+        box5.getChildren().addAll(label5, energyColor);
 
         box1.setAlignment(Pos.CENTER_RIGHT);
         box2.setAlignment(Pos.CENTER_RIGHT);
         box3.setAlignment(Pos.CENTER_RIGHT);
         box4.setAlignment(Pos.CENTER_RIGHT);
+        box5.setAlignment(Pos.CENTER_RIGHT);
 
-        res.getChildren().addAll(box1, box2, box3, box4);
+        res.getChildren().addAll(box1, box2, box3, box4, box5);
         res.setAlignment(Pos.CENTER_RIGHT);
         theLand.getChildren().clear();
         theLand.getChildren().add(res);

@@ -25,6 +25,7 @@ public class CardRender{
   public static final String FIRE_COLOR = "#FF0000";
   public static final String AIR_COLOR = "#D0E6FA";
   public static final String EARTH_COLOR = "#FFFF00";
+  public static final String ENERGY_COLOR = "#483581";
 
   public static HBox cardIdentity(Card kartu) {
     HBox hbox = new HBox();
@@ -44,10 +45,14 @@ public class CardRender{
       cardElement = new Text("AIR   ");
       elementColor.setStroke(Color.web(AIR_COLOR));
       elementColor.setFill(Color.web(AIR_COLOR));
-    } else{
+    } else if (kartu.getElement() == Element.EARTH){
       cardElement = new Text("EARTH   ");
       elementColor.setStroke(Color.web(EARTH_COLOR));
       elementColor.setFill(Color.web(EARTH_COLOR));
+    } else {
+      cardElement = new Text("ENERGY   ");
+      elementColor.setStroke(Color.web(ENERGY_COLOR));
+      elementColor.setFill(Color.web(ENERGY_COLOR));
     }
     StackPane stack = new StackPane();
     
@@ -206,8 +211,10 @@ public class CardRender{
       cssLayout = cssLayout + "#FA5858";
     } else if (element == Element.AIR){
       cssLayout = cssLayout + "#E0F2F7";
-    } else{
+    } else if (element == Element.EARTH){
       cssLayout = cssLayout + "#F7D358";
+    } else {
+      cssLayout = cssLayout + "#483581";
     }
 
     res.setStyle(cssLayout);
@@ -290,8 +297,10 @@ public class CardRender{
       cssLayout = cssLayout + "#FA5858";
     } else if (element == Element.AIR){
       cssLayout = cssLayout + "#E0F2F7";
-    } else{
+    } else if (element == Element.EARTH){
       cssLayout = cssLayout + "#F7D358";
+    } else {
+      cssLayout = cssLayout + "#483581";
     }
 
     res.setStyle(cssLayout);

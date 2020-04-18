@@ -47,3 +47,9 @@ id;name;element;description;imagepath;attack;defense;power
 62;June;EARTH;Bounty hunter with a shirshu as her pet.;src/main/resources/com/avatarduel/card/image/character/June.png;5;8;2
 63;Suki;EARTH;Leader of Kyoshi Warrior.;src/main/resources/com/avatarduel/card/image/character/Suki.png;8;8;3
 64;Pipsqueak;EARTH;Strongest member of Freedom Fighters.;src/main/resources/com/avatarduel/card/image/character/Pipsqueak.png;3;10;2
+104;Baboon Spirit;ENERGY;A resident of the Spirit World;src/main/resources/com/avatarduel/card/image/character/Baboon Spirit.png;3;4;1
+105;Hei Bai;ENERGY;A forest spirit that protected the Earth Kingdom forest for thousand of years;src/main/resources/com/avatarduel/card/image/character/Hei Bai.png;7;5;2
+106;Koh;ENERGY;A spirit that steals the face of any creature who shows a sign of emotion in his presence;src/main/resources/com/avatarduel/card/image/character/Koh.png;9;8;4
+107;Painted Lady;ENERGY;The spirit of Jang Hui River who possess healing and spiritual abilities;src/main/resources/com/avatarduel/card/image/character/Painted Lady.png;4;8;2
+108;Tui and La;ENERGY;The original waterbenders, with Tui as the originator and La as the source.;src/main/resources/com/avatarduel/card/image/character/Tui and La.png;14;10;5
+109;Wan Shi Tong;ENERGY;An ancient spirit who collects information for his Spirit Library. ;src/main/resources/com/avatarduel/card/image/character/Wan Shi Tong.png;10;7;4
