@@ -15,6 +15,11 @@ public class Deck {
     private List<Card> isiDeck;
     private int jumlahKartu;
 
+    /**
+     * Membuat sebuah objek Deck baru yang berisikan kartu-kartu yang dimiliki
+     * 
+     * @throws Exception
+     */
     public Deck() throws Exception {
         this.isiDeck = new ArrayList<>();
         this.jumlahKartu = 0;
@@ -39,12 +44,28 @@ public class Deck {
         }
         this.jumlahAwalKartu = this.jumlahKartu;
     }
-
+    
+    /**
+     * Mengembalikan jumlah kartu yang terdapat pada deck
+     * 
+     * @return integer jumlah kartu yang tersisa pada deck 
+     */
     public int getJumlahKartu() {
         return this.jumlahKartu;
     }
+
+    /**
+     * Mengembalikan jumlah awal kartu saat deck dibuat
+     * 
+     * @return integer jumlah kartu di deck pada awal permainan
+     */
     public int getJumlahAwalKartu() { return this.jumlahAwalKartu; }
 
+    /**
+     * Mengambil kartu yang berada paling depan di list isiDeck
+     * 
+     * @return Card.
+     */
     public Card pickCard() {
         this.jumlahKartu--;
         Card tempCard = isiDeck.remove(0);
