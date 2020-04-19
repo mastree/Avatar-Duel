@@ -12,6 +12,9 @@ public final class CharacterFactory implements CardFactory {
     private static CharacterFactory factory;
     private List<String[]> cards;
 
+    /**
+     * Konstruktor
+     */
     private CharacterFactory() throws IOException, URISyntaxException {
         CSVReader csvreader = new CSVReader(new File(AvatarDuel.class.getResource(CHARA_CSV_FILE_PATH).toURI()), ";");
         csvreader.setSkipHeader(true);
@@ -19,6 +22,11 @@ public final class CharacterFactory implements CardFactory {
         this.cards = csvreader.read(); 
     }
 
+    /**
+     * Getter singleton
+     *
+     * @return instance singleton
+     */
     public static CharacterFactory getInstance() throws Exception {
         if (factory == null){
             factory = new CharacterFactory();

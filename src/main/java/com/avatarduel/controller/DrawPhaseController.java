@@ -19,10 +19,16 @@ public class DrawPhaseController extends GameController implements Initializable
             goToEndGame((field.turn + 1) % 2);
         }
     }
+    /**
+     * On click handler untuk kembali ke main menu
+     */
     @FXML
     public void backToMainMenu(ActionEvent event){
         goToMainMenu();
     }
+    /**
+     * On click handler untuk ke phase selanjutnya
+     */
     @FXML
     public void handleNextPhase(ActionEvent event){
         try{
@@ -32,6 +38,9 @@ public class DrawPhaseController extends GameController implements Initializable
             System.out.println(e.getMessage());
         }
     }
+    /**
+     * Handler jika kartu di tangan diklik
+     */
     @FXML
     public void handleCardOnHand(MouseEvent event){
         resetPicked();
@@ -56,6 +65,9 @@ public class DrawPhaseController extends GameController implements Initializable
         }
         setPicked("hand", playerId, idx);
     }
+    /**
+     * Handler jika character di arena diklik
+     */
     @FXML
     public void handleCharaOnField(MouseEvent event){
         resetPicked();
@@ -77,6 +89,9 @@ public class DrawPhaseController extends GameController implements Initializable
         }
         setPicked("activeChara", playerId, idx);
     }
+    /**
+     * Handler jika skill di arena diklik
+     */
     @FXML
     public void handleSkillOnField(MouseEvent event){
         resetPicked();
@@ -98,6 +113,9 @@ public class DrawPhaseController extends GameController implements Initializable
         }
         setPicked("activeSkill", playerId, idx);
     }
+    /**
+     * Handler jika deck diklik
+     */
     @FXML
     public void handleDeck(MouseEvent event){
         int idx;
@@ -109,6 +127,9 @@ public class DrawPhaseController extends GameController implements Initializable
         field.player[field.turn].takeFromDeck();
         this.goToMainPhase();
     }
+    /**
+     * On click handler untuk mengganti kartu yang dipilih dengan kartu baru dari deck
+     */
     @FXML
     public void changeWithNewCard(ActionEvent event){
         if (pickedSource.equals("hand") && lastPicked.first == field.turn){

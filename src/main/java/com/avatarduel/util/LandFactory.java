@@ -12,6 +12,9 @@ public final class LandFactory implements CardFactory {
     private static LandFactory factory;
     private List<String[]> cards;
 
+    /**
+     * Konstruktor
+     */
     private LandFactory() throws IOException, URISyntaxException {
         CSVReader csvreader = new CSVReader(new File(AvatarDuel.class.getResource(LAND_CSV_FILE_PATH).toURI()), ";");
         csvreader.setSkipHeader(true);
@@ -19,6 +22,11 @@ public final class LandFactory implements CardFactory {
         this.cards = csvreader.read(); 
     }
 
+    /**
+     * Getter singleton
+     *
+     * @return instance singleton
+     */
     public static LandFactory getInstance() throws Exception {
         if (factory == null){
             factory = new LandFactory();

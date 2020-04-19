@@ -121,10 +121,18 @@ public class GameController implements Initializable {
 
         System.out.println("View is now loaded!");
     }
+    /**
+     * Menginisialisasi field yang akan menjadi arena permainan
+     *
+     * @param field field yang akan dijadikan arena permainan
+     */
     public void initField(Field field){
         this.field = field;
         renderAll();
     }
+    /**
+     * Mereset kartu yang sedang dipilih (termasuk menghilangkan glow effect)
+     */
     public void resetPicked(){
         if (!lastPicked.equals(-1, -1)){
             Card kartu = null;
@@ -150,6 +158,13 @@ public class GameController implements Initializable {
         pickedSource = "";
         renderLand(field.turn);
     }
+    /**
+     * Memindahkan fokus kartu yang sedang dipilih
+     *
+     * @param source jenis yang akan dipilih ("hand", "activeChara", "activeSkill")
+     * @param playerId pemilik kartu
+     * @param idx index posisi kartu yang dipilih
+     */
     public void setPicked(String source, int playerId, int idx){
         resetPicked();
         pickedSource = source;
@@ -173,6 +188,11 @@ public class GameController implements Initializable {
         } else return;
         if (kartu != null) setCardHover(kartu);
     }
+    /**
+     * Menampilkan kartu secara hover
+     *
+     * @param kartu kartu yang akan dihover
+     */
     public void setCardHover(Card kartu){
         if (kartu == null) return;
         Pane pane = CardRender.cardHover(kartu);
@@ -190,6 +210,9 @@ public class GameController implements Initializable {
             cardHoverStatus.getChildren().clear();
         }
     }
+    /**
+     * Untuk ke main menu
+     */
     public void goToMainMenu(){
         Parent temp;
         Scene gamePlay;
@@ -204,6 +227,9 @@ public class GameController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+    /**
+     * Untuk ke draw phase
+     */
     public void goToDrawPhase(){
         FXMLLoader loader;
         Parent temp;
@@ -222,6 +248,9 @@ public class GameController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+    /**
+     * Untuk ke main phase
+     */
     public void goToMainPhase(){
         FXMLLoader loader;
         Parent temp;
@@ -240,6 +269,9 @@ public class GameController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+    /**
+     * Untuk ke battle phase
+     */
     public void goToBattlePhase(){
         FXMLLoader loader;
         Parent temp;
@@ -258,6 +290,11 @@ public class GameController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+    /**
+     * Untuk ke end game
+     *
+     * @param playerId id player yang memenangkan duel
+     */
     public void goToEndGame(int playerId){
         FXMLLoader loader;
         Parent temp;
@@ -276,25 +313,61 @@ public class GameController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+    /**
+     * Merender kartu yang sedang ditangan
+     *
+     * @param playerId id player pemilik kartu
+     * @param idx posisi kartu
+     */
     public void renderOnHand(int playerId, int idx){
         if (playerId != field.turn) return;
         FieldRender.renderOnHand(cardOnHand[playerId][idx], field.getCardOnHand(playerId, idx));
     }
+    /**
+     * Merender character yang di dalam arena
+     *
+     * @param playerId id player pemilik kartu
+     * @param idx posisi kartu
+     */
     public void renderCharaOnField(int playerId, int idx){
         FieldRender.renderCharaOnField(activeChara[playerId][idx], field, playerId, idx);
     }
+    /**
+     * Merender skill yang di dalam arena
+     *
+     * @param playerId id player pemilik kartu
+     * @param idx posisi kartu
+     */
     public void renderSkillOnField(int playerId, int idx){
         FieldRender.renderSkillOnField(activeSkill[playerId][idx], field.skill[playerId][idx]);
     }
+    /**
+     * Merender deck
+     *
+     * @param playerId id player pemilik kartu
+     */
     public void renderDeck(int playerId){
         FieldRender.renderDeck(theDeck[playerId], field, playerId);
     }
+    /**
+     * Merender land
+     *
+     * @param playerId id player pemilik kartu
+     */
     public void renderLand(int playerId){
         FieldRender.renderLand(theLand[playerId], field, playerId);
     }
+    /**
+     * Merender progress bar indikator health
+     *
+     * @param playerId id player pemilik kartu
+     */
     public void renderHealth(int playerId){
         FieldRender.renderHealth(theHealth[playerId], hPIndicator[playerId], field, playerId);
     }
+    /**
+     * Merender semua
+     */
     public void renderAll(){
         for (int i=0;i<2;i++){
             for (int j=0;j<Field.COL;j++){

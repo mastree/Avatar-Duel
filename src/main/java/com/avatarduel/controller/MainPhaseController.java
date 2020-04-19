@@ -22,15 +22,22 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.*;
 
-public class MainPhaseController extends GameController implements Initializable {@Override
+public class MainPhaseController extends GameController implements Initializable {
+    @Override
     public void initField(Field field){
         super.initField(field);
         labelPhase.setText("Main Phase");
     }
+    /**
+     * On click handler untuk kembali ke main menu
+     */
     @FXML
     public void backToMainMenu(ActionEvent event){
         goToMainMenu();
     }
+    /**
+     * On click handler untuk ke phase selanjutnya
+     */
     @FXML
     public void handleNextPhase(ActionEvent event){
         try{
@@ -39,6 +46,9 @@ public class MainPhaseController extends GameController implements Initializable
             System.out.println(e.getMessage());
         }
     }
+    /**
+     * Handler jika kartu di tangan diklik
+     */
     @FXML
     public void handleCardOnHand(MouseEvent event){
         if (lock) return;
@@ -64,6 +74,9 @@ public class MainPhaseController extends GameController implements Initializable
         }
         setPicked("hand", playerId, idx);
     }
+    /**
+     * Handler jika character di arena diklik
+     */
     @FXML
     public void handleCharaOnField(MouseEvent event){
         if (lock){
@@ -169,6 +182,9 @@ public class MainPhaseController extends GameController implements Initializable
             }
         }
     }
+    /**
+     * Handler jika skill di arena diklik
+     */
     @FXML
     public void handleSkillOnField(MouseEvent event){
         if (lock) return;
@@ -241,10 +257,16 @@ public class MainPhaseController extends GameController implements Initializable
             }
         }
     }
+    /**
+     * Handler jika deck diklik
+     */
     @FXML
     public void handleDeck(MouseEvent event){
         renderDeck(0);
     }
+    /**
+     * On click handler untuk menghapus kartu di arena yang dipilih
+     */
     @FXML
     public void handleRemoveSkill(ActionEvent event){
         if (pickedSource.equals("activeSkill") && lastPicked.first == field.turn){
@@ -255,6 +277,12 @@ public class MainPhaseController extends GameController implements Initializable
             }
         }
     }
+    /**
+     * Untuk mengganti status posisi(menyerang/ bertahan) character
+     *
+     * @param playerId id player pemilik
+     * @param idx posisi character
+     */
     public void changeCharaStance(int playerId, int idx){
         field.changeCharacterStance(idx);
         setPicked("activeChara", playerId, idx);

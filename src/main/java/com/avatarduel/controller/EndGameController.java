@@ -21,10 +21,17 @@ public class EndGameController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
+    /**
+     * Inisialisasi
+     *
+     * @param playerId id player yang memenangkan duel
+     */
     public void init(int playerId){
         pesanKemenangan.setText("Player " + (playerId + 1) + " Berhasil Memenangkan Duel!");
     }
+    /**
+     * On click handler untuk kembali ke main menu
+     */
     @FXML
     public void backToMainMenu(ActionEvent event){
         Parent temp;

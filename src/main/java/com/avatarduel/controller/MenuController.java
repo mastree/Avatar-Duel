@@ -23,6 +23,9 @@ public class MenuController implements Initializable {
         System.out.println("View is now loaded!");
     }
 
+    /**
+     * Untuk memulai game
+     */
     public void StartGame(ActionEvent event) {
         FXMLLoader loader;
         Parent temp;
@@ -44,6 +47,9 @@ public class MenuController implements Initializable {
         }
     }
 
+    /**
+     * Untuk keluar dari game
+     */
     public void QuitGame(ActionEvent event) {
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.close();

@@ -15,10 +15,16 @@ public class BattlePhaseController extends GameController implements Initializab
         super.initField(field);
         labelPhase.setText("Battle Phase");
     }
+    /**
+     * On click handler untuk kembali ke main menu
+     */
     @FXML
     public void backToMainMenu(ActionEvent event){
         goToMainMenu();
     }
+    /**
+     * On click handler untuk ke phase selanjutnya
+     */
     @FXML
     public void handleNextPhase(ActionEvent event){
         try{
@@ -28,6 +34,9 @@ public class BattlePhaseController extends GameController implements Initializab
             System.out.println(e.getMessage());
         }
     }
+    /**
+     * Handler jika kartu di tangan diklik
+     */
     @FXML
     public void handleCardOnHand(MouseEvent event){
         if (lock) return;
@@ -53,6 +62,9 @@ public class BattlePhaseController extends GameController implements Initializab
         }
         setPicked("hand", playerId, idx);
     }
+    /**
+     * Handler jika character di arena diklik
+     */
     @FXML
     public void handleCharaOnField(MouseEvent event){
         int playerId = 0, idx = 0;
@@ -93,6 +105,9 @@ public class BattlePhaseController extends GameController implements Initializab
             } else resetPicked();
         }
     }
+    /**
+     * Handler jika skill di arena diklik
+     */
     @FXML
     public void handleSkillOnField(MouseEvent event){
         int playerId = 0, idx = 0;
@@ -108,6 +123,9 @@ public class BattlePhaseController extends GameController implements Initializab
             setPicked("activeSkill", playerId, idx);
         } else resetPicked();
     }
+    /**
+     * Handler jika deck diklik
+     */
     @FXML
     public void handleDeck(MouseEvent event){
         renderDeck(0);
