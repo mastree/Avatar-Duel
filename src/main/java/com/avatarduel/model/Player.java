@@ -4,6 +4,9 @@ import java.util.*;
 import com.avatarduel.model.*;
 import com.avatarduel.util.*;
 
+/**
+ * Creates a player with list of card, deck and health 
+ */
 public class Player {
     public static final int MAX_CARD = 7;
     public Card cardsOnHand[];
@@ -11,6 +14,10 @@ public class Player {
     public Deck deck;
     public int health;
 
+    /**
+     * Creates a player with health of 80 points, and take card from deck
+     * @throws Exception
+     */
     public Player() throws Exception {
         // this.landCards = new ArrayList<Land>();
         // this.skillCards = new ArrayList<Skill>();
@@ -24,6 +31,9 @@ public class Player {
         }
     }
 
+    /**
+     * Take one card from deck to hand 
+     */
     public void takeFromDeck(){
         int slot = -1;
         for (slot=0;slot<MAX_CARD;slot++){
@@ -37,6 +47,10 @@ public class Player {
         this.cardsOnHand[slot] = newCard;
     }
 
+    /**
+     * remove card from hand 
+     * @param idx the place of card in hand
+     */
     public Card removeCard(int idx){
         if (idx < 0 || idx >= MAX_CARD) return null;
         Card temp = this.cardsOnHand[idx];
