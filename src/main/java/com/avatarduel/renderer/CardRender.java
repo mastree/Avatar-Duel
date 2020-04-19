@@ -27,6 +27,11 @@ public class CardRender{
   public static final String EARTH_COLOR = "#FFFF00";
   public static final String ENERGY_COLOR = "#483581";
 
+  /**
+   * To show the identity of card 
+   * @param kartu card details
+   * @return layout with card identities (element, name)
+   */
   public static HBox cardIdentity(Card kartu) {
     HBox hbox = new HBox();
 
@@ -71,6 +76,11 @@ public class CardRender{
     return hbox;
   }
 
+  /**
+   * To show the type of card
+   * @param kartu card details
+   * @return layout with type of card 
+   */
   public static HBox cardType(Card kartu){
     HBox hbox = new HBox();
     Text cardType = new Text("[ " + kartu.getCardType() + " ]");
@@ -93,6 +103,11 @@ public class CardRender{
     return hbox;
   }
 
+  /**
+   * To show the description of card 
+   * @param kartu card details
+   * @return layout with description of the card
+   */
   public static HBox cardDesc(Card kartu){
     HBox hbox = new HBox();
     Text cardDescription = new Text(kartu.getDesc());
@@ -116,6 +131,11 @@ public class CardRender{
     return hbox;
   }
 
+  /**
+   * To show the attribute of card (attack, defense, power)
+   * @param kartu card details
+   * @return layout with card attributes
+   */
   public static HBox cardAttr(Card kartu){
     HBox hbox = new HBox();
     if (kartu instanceof Chargame){
@@ -154,6 +174,11 @@ public class CardRender{
     return hbox;
   }
 
+  /**
+   * To hover card
+   * @param kartu card details
+   * @return layout of card with image, identity, type, and description of card
+   */
   public static Pane cardHover(Card kartu){
     GridPane grid = new GridPane();
     grid.setPadding(new Insets(5, 10, 5, 10));
@@ -191,6 +216,13 @@ public class CardRender{
     return res;
   }
 
+  /**
+   * To show the status of character (skill and stance)
+   * @param field field of player
+   * @param playerId id of player
+   * @param idx index of card
+   * @return layout with character status 
+   */
   public static VBox statusOfChara(Field field, int playerId, int idx){
     if (field.chara[playerId][idx] == null) return new VBox();
     VBox res = new VBox();
@@ -216,6 +248,13 @@ public class CardRender{
     return res;
   }
 
+  /**
+   * To show the status of skill
+   * @param field field of player
+   * @param playerId id of player
+   * @param idx index of card 
+   * @return layout and details of skill on field 
+   */
   public static VBox statusOfSkill(Field field, int playerId, int idx){
     if (field.skill[playerId][idx] == null) return new VBox();
     VBox res = new VBox();
@@ -235,6 +274,11 @@ public class CardRender{
     return res;
   }
 
+  /**
+   * To show the card on hand 
+   * @param kartu card details
+   * @return layout of card on hand
+   */
   public static VBox cardNotHover(Card kartu){
     VBox res = new VBox();
     String cssLayout;
@@ -306,6 +350,12 @@ public class CardRender{
     }
     return res;
   }
+
+  /**
+   * To show the card on hand that is clicked
+   * @param kartu card details
+   * @return layout of card on hand with border
+   */
   public static VBox cardNotHoverandGlow(Card kartu){
     VBox res = cardNotHover(kartu);
     DropShadow borderGlow = new DropShadow();
@@ -319,6 +369,14 @@ public class CardRender{
     return res;
   }
 
+  /**
+   * to show the character card that is activated
+   * @param kartu card details
+   * @param addAtk number of attack
+   * @param addDef number of defense
+   * @param isDef character stance
+   * @return layout of character with details
+   */
   public static VBox activeChara(Card kartu, int addAtk, int addDef, boolean isDef){
     VBox res = new VBox();
     String cssLayout;
@@ -378,6 +436,14 @@ public class CardRender{
     return res;
   }
 
+  /**
+   * To show the character that is put on field and clicked
+   * @param kartu card details
+   * @param addAtk number of attack
+   * @param addDef number of defense 
+   * @param isDef character stance
+   * @return layout of character that has a border 
+   */
   public static VBox activeCharaandGlow(Card kartu, int addAtk, int addDef, boolean isDef){
     VBox res = activeChara(kartu, addAtk, addDef, isDef);
     DropShadow borderGlow = new DropShadow();

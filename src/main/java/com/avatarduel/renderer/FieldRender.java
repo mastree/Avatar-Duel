@@ -16,20 +16,46 @@ import javafx.scene.shape.Rectangle;
 
 public class FieldRender{
     public static final String NOT_FOUND_PATH = "card/image/ImageNotFound.png";
-
+    
+    /**
+     * Add card to hand in UI
+     * @param pane layout for UI
+     * @param kartu card details
+     */
     public static void renderOnHand(Pane pane, Card kartu){
         pane.getChildren().clear();
         pane.getChildren().add(CardRender.cardNotHover(kartu));
     }
+
+    /**
+     * Add character cards to field in UI
+     * @param pane layout for UI
+     * @param field Field for player
+     * @param playerId id of player
+     * @param idx index of character card
+     */
     public static void renderCharaOnField(Pane pane, Field field, int playerId, int idx){
         Card kartu = field.chara[playerId][idx];
         pane.getChildren().clear();
         pane.getChildren().add(CardRender.activeChara(kartu, field.getCharaAtk(playerId, idx), field.getCharaDef(playerId, idx), field.isDef[playerId][idx]));
     }
+
+    /**
+     * Add skill card to field in UI
+     * @param pane layout for UI
+     * @param kartu card details
+     */
     public static void renderSkillOnField(Pane pane, Card kartu){
         pane.getChildren().clear();
         pane.getChildren().add(CardRender.cardNotHover(kartu));
     }
+
+    /**
+     * Add card to deck in UI
+     * @param theDeck deck layout
+     * @param field Field for player
+     * @param playerId id of player 
+     */
     public static void renderDeck(AnchorPane theDeck, Field field, int playerId){
         HBox res = new HBox();
         res.setSpacing(10);
@@ -57,6 +83,13 @@ public class FieldRender{
         theDeck.getChildren().clear();
         theDeck.getChildren().add(res);
     }
+
+    /**
+     * Add land to field for every element in UI 
+     * @param theLand layout for UI
+     * @param field field of player
+     * @param playerId id of player
+     */
     public static void renderLand(AnchorPane theLand, Field field, int playerId){
         VBox res = new VBox();
         res.setSpacing(3);
@@ -113,6 +146,15 @@ public class FieldRender{
         theLand.getChildren().clear();
         theLand.getChildren().add(res);
     }
+
+    /**
+     * Add a progressbar to show health of player
+     * @param theHealth layout for prograssbar
+     * @param hPIndicator the text to represent health
+     * @param field field of player 
+     * @param playerId id of player 
+     */
+
     public static void renderHealth(ProgressBar theHealth, Label hPIndicator, Field field, int playerId){
         Integer a = field.player[playerId].health;
         Integer b = 80;
