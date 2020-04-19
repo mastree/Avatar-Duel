@@ -191,6 +191,50 @@ public class CardRender{
     return res;
   }
 
+  public static VBox statusOfChara(Field field, int playerId, int idx){
+    if (field.chara[playerId][idx] == null) return new VBox();
+    VBox res = new VBox();
+    res.setSpacing(7);
+    Text curBuff = new Text("Current Buff");
+    curBuff.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
+    Rectangle rect = new Rectangle(166, 11);
+    rect.setFill(Color.web("#b6b9bb"));
+
+    int atk = field.getCharaAtk(playerId, idx) - field.chara[playerId][idx].getAtk();
+    int def = field.getCharaDef(playerId, idx) - field.chara[playerId][idx].getDef();
+    String satk = (atk >= 0 ? ("+" + atk + " ") : (atk + " "));
+    String sdef = (def >= 0 ? ("+" + def + " ") : (def + " "));
+    Text auraEffect = new Text("Aura Effect: " + satk + sdef);
+    String puStat = (field.getCharaPowerUpStatus(playerId, idx) ? "Active" : "None");
+    Text powerUpStat = new Text("Power Up: " + puStat);
+    String sStance = (field.isDef[playerId][idx] ? "Defense" : "Attack");
+    Text stanceStat = new Text("Stance: " + sStance);
+    auraEffect.setFont(Font.font(12));
+    powerUpStat.setFont(Font.font(12));
+    stanceStat.setFont(Font.font(12));
+    res.getChildren().addAll(curBuff, rect, auraEffect, powerUpStat, stanceStat);
+    return res;
+  }
+
+  public static VBox statusOfSkill(Field field, int playerId, int idx){
+    if (field.skill[playerId][idx] == null) return new VBox();
+    VBox res = new VBox();
+    res.setSpacing(7);
+    Text curBuff = new Text("Skill Target");
+    curBuff.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
+    Rectangle rect = new Rectangle(166, 11);
+    rect.setFill(Color.web("#b6b9bb"));
+
+    Pair target = field.skillPointer[playerId][idx];
+    Text targetPlayer = new Text("Player " + (target.first + 1));
+    Text targetPosition = new Text("Kartu ke-" + (target.second + 1) + " dari kiri");
+
+    targetPlayer.setFont(Font.font(12));
+    targetPosition.setFont(Font.font(12));
+    res.getChildren().addAll(curBuff, rect, targetPlayer, targetPosition);
+    return res;
+  }
+
   public static VBox cardNotHover(Card kartu){
     VBox res = new VBox();
     String cssLayout;

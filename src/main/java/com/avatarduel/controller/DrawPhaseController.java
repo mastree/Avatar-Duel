@@ -109,4 +109,14 @@ public class DrawPhaseController extends GameController implements Initializable
         field.player[field.turn].takeFromDeck();
         this.goToMainPhase();
     }
+    @FXML
+    public void changeWithNewCard(ActionEvent event){
+        if (pickedSource.equals("hand") && lastPicked.first == field.turn){
+            if (field.player[lastPicked.first].cardsOnHand[lastPicked.second] != null){
+                field.player[lastPicked.first].removeCard(lastPicked.second);
+                field.player[lastPicked.first].takeFromDeck();
+                goToMainPhase();
+            }
+        }
+    }
 }

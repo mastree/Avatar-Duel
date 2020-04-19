@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.avatarduel.controller.DrawPhaseController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.avatarduel.controller.DrawPhaseController">
     <left>
         <SplitPane dividerPositions="0.5120481927710844" orientation="VERTICAL" prefHeight="334.0" prefWidth="170.0" BorderPane.alignment="CENTER">
             <items>
@@ -22,7 +22,7 @@
                     <children>
                   <SplitPane dividerPositions="0.5" layoutX="-14.0" layoutY="-54.0" orientation="VERTICAL" prefHeight="159.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                      <AnchorPane fx:id="cardHoverStatus" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
                               <VBox layoutX="14.0" layoutY="-37.0" prefHeight="75.0" prefWidth="166.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -47,6 +47,7 @@
                 <ProgressBar fx:id="myHealth" layoutX="14.0" layoutY="7.0" prefHeight="18.0" prefWidth="394.0" progress="0.0" />
                 <Label layoutX="533.0" layoutY="6.0" prefHeight="17.0" prefWidth="53.0" text="Player1" />
                 <Label fx:id="myHPIndicator" layoutX="408.0" layoutY="6.0" text="Label" />
+            <Button layoutX="833.0" layoutY="2.0" mnemonicParsing="false" onAction="#changeWithNewCard" prefHeight="25.0" prefWidth="146.0" text="Change with new card" />
             </children>
         </Pane>
     </bottom>

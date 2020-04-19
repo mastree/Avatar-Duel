@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -39,6 +40,8 @@ public class GameController implements Initializable {
     public Pane myActiveSkill1, myActiveSkill2, myActiveSkill3, myActiveSkill4, myActiveSkill5, myActiveSkill6;
     public Pane urActiveSkill1, urActiveSkill2, urActiveSkill3, urActiveSkill4, urActiveSkill5, urActiveSkill6;
     public Pane activeSkill[][];
+
+    public AnchorPane cardHoverStatus;
 
     public ProgressBar myHealth, urHealth, theHealth[];
 
@@ -175,6 +178,17 @@ public class GameController implements Initializable {
         Pane pane = CardRender.cardHover(kartu);
         upperLeftPanel.getChildren().clear();
         upperLeftPanel.getChildren().add(pane);
+        if (kartu.getCardType().equals("Character") && pickedSource.equals("activeChara")){
+            VBox stats = CardRender.statusOfChara(field, lastPicked.first, lastPicked.second);
+            cardHoverStatus.getChildren().clear();
+            cardHoverStatus.getChildren().add(stats);
+        } else if (kartu.getCardType().equals("Skill") && pickedSource.equals("activeSkill") && lock == false){
+            VBox stats = CardRender.statusOfSkill(field, lastPicked.first, lastPicked.second);
+            cardHoverStatus.getChildren().clear();
+            cardHoverStatus.getChildren().add(stats);
+        } else{
+            cardHoverStatus.getChildren().clear();
+        }
     }
     public void goToMainMenu(){
         Parent temp;
